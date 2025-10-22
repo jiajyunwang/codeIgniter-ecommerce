@@ -57,4 +57,6 @@ $route['user/register'] = 'frontend/register';
 $route['user/login'] = 'frontend/login';
 $route['user/logout'] = 'frontend/logout';
 
+$route['admin/login'] = 'admin/login';
+
 $route['test'] = 'frontend/test';

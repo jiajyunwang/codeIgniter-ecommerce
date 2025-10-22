@@ -6,11 +6,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <p>登入</p>
 </div>
 <div class="form">
-    <form method="post" action="<?php echo base_url('user/login') ?>">
+    <?= form_open('frontend/login'); ?>
         <label>Email</label>
-        <input type="text" name="email" required="required" value="<?php echo set_value('email'); ?>">
+        <input type="text" name="email" required="required" value="<?= set_value('email'); ?>">
         <?php if (form_error('email')): ?>
-            <span class="error"><?php echo form_error('email'); ?></span>
+            <span class="error"><?= form_error('email'); ?></span>
         <?php endif; ?>
         <?php if($this->session->flashdata('error')): ?>
             <div class="error">
@@ -21,9 +21,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <label>密碼</label>
         <input type="password" name="password" required="required"><br>
         <?php if (form_error('password')): ?>
-            <span class="error"><?php echo form_error('password'); ?></span>
+            <span class="error"><?= form_error('password'); ?></span>
         <?php endif; ?>
 
         <button type="submit">登入</button>
-    </form>
+    <?= form_close(); ?>
 </div>

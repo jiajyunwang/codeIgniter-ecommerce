@@ -9,9 +9,6 @@ class Frontend extends CI_Controller {
     }
 
     public function register() {
-        $this->load->helper('form');
-        $this->load->helper('url');
-
         if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('nickname', 'Nickname', 'required|max_length[50]');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email|max_length[100]');
@@ -45,9 +42,6 @@ class Frontend extends CI_Controller {
     }
 
     public function login() {
-        $this->load->helper('form');
-        $this->load->helper('url');
-
         if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email|max_length[100]');
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
@@ -72,6 +66,11 @@ class Frontend extends CI_Controller {
         }
         $data['content'] = 'frontend/pages/login';
         $this->load->view('frontend/layouts/master', $data);
+    }
+
+    public function logout() {
+        $this->session->sess_destroy();
+        redirect('/');
     }
 
     // public function test() {
