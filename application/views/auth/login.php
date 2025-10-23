@@ -15,33 +15,35 @@
           <div class="text-center">
             <h1 class="h4 text-gray-900 mb-4">後台管理系統</h1>
           </div>
-          <form class="user"  method="POST" action="{{ route('login') }}">
-            @csrf
+          <?= form_open('admin/login'); ?>
             <div class="form-group">
-              <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..."  required autocomplete="email" autofocus>
-                @error('email')
+              <input type="email" class="form-control form-control-user <?= form_error('email') ? 'is-invalid' : ''; ?>" 
+              name="email" value="<?= set_value('email'); ?>" id="exampleInputEmail" aria-describedby="emailHelp" 
+              placeholder="Enter Email Address..."  required autocomplete="email" autofocus>
+                <?php if (form_error('email')): ?>
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
+                        <strong><?= form_error('email'); ?></strong>
                     </span>
-                @enderror
-                @if (session('error'))
+                <?php endif; ?>
+                <?php if($this->session->flashdata('error')): ?>
                     <div class="alert alert-danger">
-                        {{ session('error') }}
+                        <?php echo $this->session->flashdata('error'); ?>
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control form-control-user @error('password') is-invalid @enderror" id="exampleInputPassword" placeholder="Password"  name="password" required autocomplete="current-password">
-                  @error('password')
+              <input type="password" class="form-control form-control-user <?= form_error('password') ? 'is-invalid' : ''; ?>" 
+              id="exampleInputPassword" placeholder="Password"  name="password" required autocomplete="current-password">
+                <?php if (form_error('password')): ?>
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
+                        <strong><?= form_error('password'); ?></strong>
                     </span>
-                @enderror
+                <?php endif; ?>
             </div>
             <button type="submit" class="btn btn-primary btn-user btn-block">
               Login
             </button>
-          </form>
+          <?= form_close(); ?>
         </div>
       </div>
     </div>

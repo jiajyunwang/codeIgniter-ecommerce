@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <p>註冊</p>
 </div>
 <div class="form">
-    <?= form_open('frontend/register'); ?>
+    <?= form_open('user/register'); ?>
         <label>暱稱<span>*</span></label>
         <input type="text" name="nickname" value="<?= set_value('nickname'); ?>" required="required">
         <?php if (form_error('nickname')): ?>

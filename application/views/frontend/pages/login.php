@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <p>登入</p>
 </div>
 <div class="form">
-    <?= form_open('frontend/login'); ?>
+    <?= form_open('user/login'); ?>
         <label>Email</label>
         <input type="text" name="email" required="required" value="<?= set_value('email'); ?>">
         <?php if (form_error('email')): ?>
