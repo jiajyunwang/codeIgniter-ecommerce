@@ -13,6 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body class="bg-primary">
 
     <?php $this->load->view('frontend/layouts/header'); ?>
+    
     <?php $this->load->view($content); ?>
 
     <!-- @include('frontend.layouts.footer')

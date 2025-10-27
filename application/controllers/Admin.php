@@ -29,4 +29,9 @@ class Admin extends CI_Controller {
         }
         $this->load->view('auth/login');
     }
+
+    public function index() {
+        $data['content'] = 'backend/product/index';
+        $this->load->view('backend/layouts/master', $data);
+    }
 }
