@@ -3,6 +3,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Frontend extends CI_Controller {
 
+    public function __construct() {
+        parent::__construct();
+
+        $allowed = ['index', 'register', 'login'];
+
+        $currentMethod = $this->router->fetch_method();
+
+        if (!in_array($currentMethod, $allowed)) {
+            if (!$this->session->userdata('user')) {
+                redirect('user/login');
+            }
+        }
+    }
+
     public function index() {
         $data['content'] = 'frontend/index';
         $this->load->view('frontend/layouts/master', $data);
@@ -24,7 +38,8 @@ class Frontend extends CI_Controller {
                     'updated_at' => date('Y-m-d H:i:s')
                 ];
 
-                $insert = $this->db->insert('users', $data);
+                $this->load->model('User_model');
+                $insert = $this->User_model->register_user($data);
 
                 if ($insert) {
                     // 註冊成功 → 設 Session 並導向首頁
@@ -50,8 +65,8 @@ class Frontend extends CI_Controller {
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
 
-                $query = $this->db->get_where('users', array('email' => $email));
-                $user = $query->row();
+                $this->load->model('User_model');
+                $user = $this->User_model->get_user_by_email($email);
 
                 if ($user && password_verify($password, $user->password)) {
                     // 登入成功 → 設 Session 並導向首頁
@@ -81,5 +96,5 @@ class Frontend extends CI_Controller {
     //     echo "<pre>";
     //     print_r($tables);
     //     echo "</pre>";
-    //         }
+    // }
 }
