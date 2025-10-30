@@ -50,6 +50,67 @@ class Admin extends CI_Controller {
     }
 
     public function index() {
+        $products = Product::all();
+        $type = $request->query('type');
+        $productCol = $unlistedCol = $unhandledCol = $shippingCol = $completedCol = $cancelCol = 'col';
+        if ($type==null || $type=='listed' || $type=='unlisted'){
+            if ($type==null || $type=='listed'){
+                $products =  $products->where('status', 'active');
+                $type = 'listed';
+                $productCol = 'border';
+            }
+            elseif ($type == 'unlisted'){
+                $products =  $products->where('status', 'inactive');
+                $unlistedCol = 'border';
+            }
+
+            return view('backend.product.index')
+                ->with('productCol', $productCol)
+                ->with('unlistedCol', $unlistedCol)
+                ->with('unhandledCol', $unhandledCol)
+                ->with('shippingCol', $shippingCol)
+                ->with('completedCol', $completedCol)
+                ->with('cancelCol', $cancelCol)
+                ->with('type', $type)
+                ->with('products', $products);
+        }
+        elseif ($type=='unhandled' || $type=='shipping' || $type=='completed' || $type == 'cancel'){
+            if ($type == 'unhandled'){
+                $orders = Order::with('order_details')
+                    ->where('status', 'unhandled')
+                    ->paginate(10);
+                $unhandledCol = 'border';
+            }
+            elseif ($type == 'shipping'){
+                $orders = Order::with('order_details')
+                    ->where('status', 'shipping')
+                    ->paginate(10);
+                $shippingCol = 'border';
+            }
+            elseif ($type == 'completed'){
+                $orders = Order::with('order_details')
+                    ->where('status', 'completed')
+                    ->paginate(10);
+                $completedCol = 'border';
+            }
+            elseif ($type == 'cancel'){
+                $orders = Order::with('order_details')
+                    ->where('status', 'cancel')
+                    ->paginate(10);
+                $cancelCol = 'border';
+            }
+
+            return view('backend.order.index')
+                ->with('productCol', $productCol)
+                ->with('unlistedCol', $unlistedCol)
+                ->with('unhandledCol', $unhandledCol)
+                ->with('shippingCol', $shippingCol)
+                ->with('completedCol', $completedCol)
+                ->with('cancelCol', $cancelCol)
+                ->with('type', $type)
+                ->with('orders', $orders);
+        }
+        
         $data['content'] = 'backend/product/index';
         $this->load->view('backend/layouts/master', $data);
     }
